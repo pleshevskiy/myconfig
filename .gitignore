@@ -3,5 +3,10 @@
 !/.gitignore
 
 !/programs
+
 /programs/nvim/*
 !/programs/nvim/init.vim
+!/programs/nvim/plugins
+
+/programs/tmux/*
+!/programs/tmux/.tmux.conf
