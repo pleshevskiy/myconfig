@@ -29,17 +29,17 @@ nnoremap <leader>sv :source $MYVIMRC<cr>
 " }}}
 
 " Markdown file settings {{{
-augroup filetype_md
-  autocmd!
-  autocmd FileType markdown iabbrev @@ dmitriy@ideascup.me
-augroup END
+aug filetype_md
+  au!
+  au FileType markdown iabbrev @@ dmitriy@ideascup.me
+aug END
 " }}}
 
 " Vimscript file settings {{{
-augroup filetype_vim
-  autocmd!
-  autocmd FileType vim setlocal foldmethod=marker foldcolumn=1 foldlevelstart=0
-augroup END
+aug filetype_vim
+  au!
+  au FileType vim setlocal foldmethod=marker foldcolumn=1 foldlevelstart=0
+aug END
 " }}}
 
 " Plugins {{{
@@ -74,10 +74,10 @@ let g:sql_type_default = 'pgsql'
 
 " Plugin: NeoFormat {{{
 let g:neoformat_try_node_exe = 1
-augroup fmt
-  autocmd!
-  autocmd BufWritePre javascript,typescript,rust undojoin | Neoformat
-augroup END
+aug fmt
+  au!
+  au BufWritePre javascript,typescript,rust undojoin | Neoformat
+aug END
 " }}}
 
 " Plugin: NerdTree {{{
@@ -126,11 +126,11 @@ function! s:on_lsp_buffer_enabled() abort
     " refer to doc to add more commands
 endfunction
 
-augroup lsp_install
+aug lsp_install
     au!
     " call s:on_lsp_buffer_enabled only for languages that has the server registered.
-    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
-augroup END
+    au User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+aug END
 " }}}
 
 " Theme {{{
