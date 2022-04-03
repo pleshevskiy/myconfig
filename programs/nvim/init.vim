@@ -38,7 +38,7 @@ augroup END
 " Vimscript file settings {{{
 augroup filetype_vim
   autocmd!
-  autocmd FileType vim setlocal foldmethod=marker
+  autocmd FileType vim setlocal foldmethod=marker foldcolumn=1 foldlevelstart=0
 augroup END
 " }}}
 
