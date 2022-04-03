@@ -35,13 +35,6 @@ aug filetype_md
 aug END
 " }}}
 
-" Vimscript file settings {{{
-aug filetype_vim
-  au!
-  au FileType vim setlocal foldmethod=marker foldcolumn=1 foldlevelstart=0
-aug END
-" }}}
-
 " Plugins {{{
 call plug#begin()
   Plug 'junegunn/seoul256.vim'                        " theme
