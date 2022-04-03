@@ -76,7 +76,7 @@ let g:sql_type_default = 'pgsql'
 let g:neoformat_try_node_exe = 1
 augroup fmt
   autocmd!
-  autocmd BufWritePre * undojoin | Neoformat
+  autocmd BufWritePre javascript,typescript,rust undojoin | Neoformat
 augroup END
 " }}}
 
