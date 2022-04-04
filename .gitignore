@@ -10,3 +10,6 @@
 
 /programs/tmux/*
 !/programs/tmux/.tmux.conf
+
+/programs/alacritty/*
+!/programs/alacritty/alacritty.yml
