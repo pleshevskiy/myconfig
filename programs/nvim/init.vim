@@ -69,7 +69,8 @@ let g:sql_type_default = 'pgsql'
 let g:neoformat_try_node_exe = 1
 aug fmt
   au!
-  au BufWritePre javascript,typescript,rust undojoin | Neoformat
+  au FileType javascript,javascriptreact,typescript,typescriptreact,rust
+    \ au BufWritePre <buffer> undojoin | Neoformat
 aug END
 " }}}
 
