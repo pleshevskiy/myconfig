@@ -39,8 +39,8 @@ aug END
 call plug#begin()
   Plug 'junegunn/seoul256.vim'                        " theme
   Plug 'Yggdroot/indentLine'                          " tab and space indentation
-	Plug 'mg979/vim-visual-multi', {'branch': 'master'} " multi cursors
-	Plug 'preservim/nerdtree'                           " file tree
+  Plug 'mg979/vim-visual-multi', {'branch': 'master'} " multi cursors
+  Plug 'preservim/nerdtree'                           " file tree
   Plug 'Xuyuanp/nerdtree-git-plugin'
 
   Plug 'prabirshrestha/vim-lsp'                       " lsp for many langs
@@ -48,17 +48,18 @@ call plug#begin()
   Plug 'prabirshrestha/asyncomplete-lsp.vim'
   Plug 'mattn/vim-lsp-settings'                       " settings for lsp plugin
 
-	Plug 'sbdchd/neoformat'                             " format langs via official tools
+  Plug 'sbdchd/neoformat'                             " format langs via official tools
   Plug 'easymotion/vim-easymotion'                    " fast navigation
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " fuzzy find files
   Plug 'junegunn/fzf.vim'                             " fzf integration
   Plug 'dyng/ctrlsf.vim'                              " async searching
-	Plug 'christoomey/vim-tmux-navigator'               " navigation inside tmux
-	Plug 'editorconfig/editorconfig-vim'								" editorconfig
+  Plug 'christoomey/vim-tmux-navigator'               " navigation inside tmux
+  Plug 'editorconfig/editorconfig-vim'								" editorconfig
   Plug 'cespare/vim-toml', { 'branch': 'main' }       " toml lang
-	Plug 'rust-lang/rust.vim'                           " rust lang
+  Plug 'rust-lang/rust.vim'                           " rust lang
   Plug 'jparise/vim-graphql'                          " graphql lang with gql tag
   Plug 'lifepillar/pgsql.vim'                         " postgresql lang support
+  Plug 'LnL7/vim-nix'                                 " nix lang
 call plug#end()
 " }}}
 
@@ -70,7 +71,7 @@ let g:neoformat_try_node_exe = 1
 aug fmt
   au!
   au FileType javascript,javascriptreact,typescript,typescriptreact,rust
-    \ au BufWritePre <buffer> undojoin | Neoformat
+        \ au BufWritePre <buffer> undojoin | Neoformat
 aug END
 " }}}
 
@@ -86,16 +87,16 @@ nnoremap <C-t> :NERDTreeToggle<CR>
 " Plugin: NerdTreeGit {{{
 let g:NERDTreeGitStatusShowIgnored = 1
 let g:NERDTreeGitStatusIndicatorMapCustom = {
-    \ "Modified"  : "ᵐ",
-    \ "Staged"    : "ˢ",
-    \ "Untracked" : "ᵘ",
-    \ "Renamed"   : "ʳ",
-    \ "Unmerged"  : "ᶴ",
-    \ "Deleted"   : "ˣ",
-    \ "Dirty"     : "˜",
-    \ "Clean"     : "ᵅ",
-    \ "Unknown"   : "?"
-    \ }
+      \ "Modified"  : "ᵐ",
+      \ "Staged"    : "ˢ",
+      \ "Untracked" : "ᵘ",
+      \ "Renamed"   : "ʳ",
+      \ "Unmerged"  : "ᶴ",
+      \ "Deleted"   : "ˣ",
+      \ "Dirty"     : "˜",
+      \ "Clean"     : "ᵅ",
+      \ "Unknown"   : "?"
+      \ }
 " }}}
 
 " Plugin: LSP {{{
@@ -103,27 +104,27 @@ let g:lsp_preview_max_width = 60
 let g:lsp_diagnostics_float_cursor = 1
 
 function! s:on_lsp_buffer_enabled() abort
-    setlocal omnifunc=lsp#complete
-    if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
-    nmap <buffer> gd <plug>(lsp-definition)
-    nmap <buffer> gs <plug>(lsp-document-symbol-search)
-    nmap <buffer> gS <plug>(lsp-workspace-symbol-search)
-    nmap <buffer> gr <plug>(lsp-references)
-    nmap <buffer> gi <plug>(lsp-implementation)
-    nmap <buffer> gt <plug>(lsp-type-definition)
-    nmap <buffer> <leader>rn <plug>(lsp-rename)
-    nmap <buffer> [g <plug>(lsp-previous-diagnostic)
-    nmap <buffer> ]g <plug>(lsp-next-diagnostic)
-    nmap <buffer> K <plug>(lsp-hover)
-    nnoremap <buffer> <expr><c-f> lsp#scroll(+4)
-    nnoremap <buffer> <expr><c-d> lsp#scroll(-4)
-    " refer to doc to add more commands
+  setlocal omnifunc=lsp#complete
+  if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
+  nmap <buffer> gd <plug>(lsp-definition)
+  nmap <buffer> gs <plug>(lsp-document-symbol-search)
+  nmap <buffer> gS <plug>(lsp-workspace-symbol-search)
+  nmap <buffer> gr <plug>(lsp-references)
+  nmap <buffer> gi <plug>(lsp-implementation)
+  nmap <buffer> gt <plug>(lsp-type-definition)
+  nmap <buffer> <leader>rn <plug>(lsp-rename)
+  nmap <buffer> [g <plug>(lsp-previous-diagnostic)
+  nmap <buffer> ]g <plug>(lsp-next-diagnostic)
+  nmap <buffer> K <plug>(lsp-hover)
+  nnoremap <buffer> <expr><c-f> lsp#scroll(+4)
+  nnoremap <buffer> <expr><c-d> lsp#scroll(-4)
+  " refer to doc to add more commands
 endfunction
 
 aug lsp_install
-    au!
-    " call s:on_lsp_buffer_enabled only for languages that has the server registered.
-    au User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+  au!
+  " call s:on_lsp_buffer_enabled only for languages that has the server registered.
+  au User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
 aug END
 " }}}
 
