@@ -21,4 +21,10 @@ in
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+
+  programs.exa = {
+    enable = true;
+    # TODO: install zsh and activate aliases
+    # enableAliases = true;
+  };
 }
