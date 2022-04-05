@@ -28,12 +28,29 @@ in
     defaultKeymap = "viins";
     dotDir = ".config/zsh";
 
-    history.path = "${config.xdg.dataHome}/zsh/zsh_history";
+    history = {
+      path = "${config.xdg.dataHome}/zsh/zsh_history";
+      expireDuplicatesFirst = true;
+      ignorePatterns = [
+        "rm *"
+        "kill *"
+      ];
+    };
 
     oh-my-zsh = {
       enable = true;
       theme = "robbyrussell";
     };
+
+    initExtraFirst = ''
+      if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then
+        source $HOME/.nix-profile/etc/profile.d/nix.sh;
+      fi
+
+      source $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh
+
+      export NIX_PATH=$HOME/.nix-defexpr/channels''${NIX_PATH:+:$NIX_PATH}
+    '';
   };
 
   programs.git = {
