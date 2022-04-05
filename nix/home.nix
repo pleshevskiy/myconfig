@@ -31,6 +31,14 @@ in
       init.defaultBranch = "main";
       pull.rebase = true;
     };
+    aliases = {
+      co = "checkout";
+      ci = "commit";
+      cia = "commit --amend";
+      cian = "commit --amend --no-edit";
+      st = "status -sb";
+      fpush = "push --force-with-lease";
+    };
   };
 
   programs.exa = {
