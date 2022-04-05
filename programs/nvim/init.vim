@@ -3,7 +3,6 @@ let g:mapleader = ','
 let g:maplocalleader = '-'
 
 syntax enable
-filetype plugin on
 filetype plugin indent on
 set encoding=utf-8
 set autoindent
@@ -62,7 +61,6 @@ call plug#begin()
   Plug 'LnL7/vim-nix'                                 " nix lang
 call plug#end()
 " }}}
-
 
 let g:sql_type_default = 'pgsql'
 
