@@ -6,8 +6,8 @@ in
 {
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
-  home.username = secrets.username;
-  home.homeDirectory = secrets.homeDir;
+  home.username = secrets.home.name;
+  home.homeDirectory = secrets.home.dir;
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
@@ -21,6 +21,17 @@ in
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+
+  programs.git = {
+    enable = true;
+    userName = secrets.git.name;
+    userEmail = secrets.git.email;
+    extraConfig = {
+      core.editor = "nvim";
+      init.defaultBranch = "main";
+      pull.rebase = true;
+    };
+  };
 
   programs.exa = {
     enable = true;
