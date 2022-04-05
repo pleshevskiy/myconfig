@@ -2,6 +2,12 @@
 
 !/.gitignore
 
+!/nix
+/nix/*
+!/nix/home.nix
+!/nix/*.example.nix
+
+
 !/programs
 
 /programs/nvim/*
