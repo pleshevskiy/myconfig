@@ -9,13 +9,17 @@
 
 
 !/programs
+/programs/*
 
+!/programs/nvim
 /programs/nvim/*
 !/programs/nvim/init.vim
 !/programs/nvim/plugins
 
+!/programs/tmux
 /programs/tmux/*
 !/programs/tmux/.tmux.conf
 
+!/programs/alacritty
 /programs/alacritty/*
 !/programs/alacritty/alacritty.yml

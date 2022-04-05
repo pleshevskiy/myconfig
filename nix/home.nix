@@ -22,6 +22,20 @@ in
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
+  programs.zsh = {
+    enable = true;
+    enableAutosuggestions = true;
+    defaultKeymap = "viins";
+    dotDir = ".config/zsh";
+
+    history.path = "${config.xdg.dataHome}/zsh/zsh_history";
+
+    oh-my-zsh = {
+      enable = true;
+      theme = "robbyrussell";
+    };
+  };
+
   programs.git = {
     enable = true;
     userName = secrets.git.name;
@@ -43,7 +57,10 @@ in
 
   programs.exa = {
     enable = true;
-    # TODO: install zsh and activate aliases
-    # enableAliases = true;
+    enableAliases = true;
+  };
+
+  xdg.configFile = {
+    "alacritty/alacritty.yml".source = ../programs/alacritty/alacritty.yml;
   };
 }
