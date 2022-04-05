@@ -20,10 +20,16 @@ in
   home.stateVersion = "21.11";
 
   home.packages = [
-    pkgs.xh           # friendly and fast tool for sending HTTP requests
-    pkgs.fd           # a simple, fast and user-friendly alternative to find
-    pkgs.bat          # a cat clone with syntax highlighting and git integration
+    pkgs.xh             # friendly and fast tool for sending HTTP requests
+    pkgs.fd             # a simple, fast and user-friendly alternative to find
+    pkgs.bat            # a cat clone with syntax highlighting and git integration
+
+    pkgs.postgresql_12  # 🤷 I need only psql
   ];
+
+  home.sessionVariables = {
+    EDITOR = "nvim";
+  };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -66,7 +72,6 @@ in
     userName = secrets.git.name;
     userEmail = secrets.git.email;
     extraConfig = {
-      core.editor = "nvim";
       init.defaultBranch = "main";
       pull.rebase = true;
     };
