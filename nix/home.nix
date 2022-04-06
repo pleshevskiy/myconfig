@@ -4,10 +4,29 @@ let
   secrets = import ./secrets.nix;
 in
 {
+  nixpkgs.overlays = [
+    (self: super: {
+      haskellPackages = super.haskellPackages.override {
+        overrides = hself: hsuper: {
+          xmonad = hsuper.xmonad_0_17_0;
+          xmonad-contrib = hsuper.xmonad-contrib_0_17_0;
+          xmonad-extras = hsuper.xmonad-extras_0_17_0;
+        };
+      };
+    })
+  ];
+
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
   home.username = secrets.home.name;
   home.homeDirectory = secrets.home.dir;
+
+  home.keyboard = {
+    model = "pc105";
+    layout = "us,ru";
+    variant = "dvorak,";
+    options = ["grp:win_space_toggle"];
+  };
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
@@ -19,12 +38,18 @@ in
   # changes in each release.
   home.stateVersion = "21.11";
 
-  home.packages = [
-    pkgs.xh             # friendly and fast tool for sending HTTP requests
-    pkgs.fd             # a simple, fast and user-friendly alternative to find
-    pkgs.bat            # a cat clone with syntax highlighting and git integration
+  home.packages = with pkgs; [
+    dmenu          # menu for x window system
+    xmobar         # a minimalistic text based status bar
+    flameshot      # powerful yet simple to use screenshot software
 
-    pkgs.postgresql_12  # 🤷 I need only psql
+    xh             # friendly and fast tool for sending HTTP requests
+    fd             # a simple, fast and user-friendly alternative to find
+    bat            # a cat clone with syntax highlighting and git integration
+
+    postgresql_12  # 🤷 I need only psql
+
+    librewolf      # a fork of firefox, focused on privacy, security and freedom
   ];
 
   home.sessionVariables = {
@@ -98,6 +123,24 @@ in
   };
 
   xdg.configFile = {
+    # add config for alacritty terminal
     "alacritty/alacritty.yml".source = ../programs/alacritty/alacritty.yml;
+
+    # add config for xmonad window manager
+    # "xmonad/xmonad.hs".source = ../programs/xmonad/xmonad.hs;
+    # "xmobar/xmobar.hs".source = ../programs/xmonad/xmobar.hs;
+  };
+
+  xsession = {
+    enable = true;
+
+    profileExtra = ''
+      systemctl --user restart setxkbmap.service
+    '';
+
+    windowManager.xmonad = {
+      enable = true;
+      enableContribAndExtras = true;
+    };
   };
 }

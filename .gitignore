@@ -23,3 +23,7 @@
 !/programs/alacritty
 /programs/alacritty/*
 !/programs/alacritty/alacritty.yml
+
+!/programs/xmonad
+/programs/xmonad/*
+!/programs/xmonad/*.hs
