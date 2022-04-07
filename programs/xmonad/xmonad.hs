@@ -23,12 +23,11 @@ import qualified Data.Map        as M
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
--- myTerminal      = "xterm"
 myTerminal      = "alacritty"
 
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool
-myFocusFollowsMouse = True
+myFocusFollowsMouse = False
 
 -- Whether clicking on a window to focus also passes the click to the window
 myClickJustFocuses :: Bool
@@ -54,7 +53,7 @@ myModMask       = mod1Mask
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
-myWorkspaces    = ["1","2","3","4","5","6","7","8","9"]
+myWorkspaces    = map show [1..9]
 
 -- Border colors for unfocused and focused windows, respectively.
 --
@@ -72,9 +71,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- launch dmenu
     , ((modm,               xK_p     ), spawn "dmenu_run")
 
-    -- launch gmrun
-    , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
-
     -- close focused window
     , ((modm .|. shiftMask, xK_c     ), kill)
 
@@ -86,9 +82,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- Resize viewed windows to the correct size
     , ((modm,               xK_n     ), refresh)
-
-    -- Move focus to the next window
-    , ((modm,               xK_Tab   ), windows W.focusDown)
 
     -- Move focus to the next window
     , ((modm,               xK_j     ), windows W.focusDown)
@@ -295,24 +288,15 @@ defaults = def {
 -- | Finally, a copy of the default bindings in simple textual tabular format.
 help :: String
 help = unlines ["The default modifier key is 'alt'. Default keybindings:",
-    "## CUSTOM",
-    "-- Screenshot",
-    "mod-Shift-s      Launch 'flameshot' to screenshot",
     "",
-    "## DEFAULT",
     "-- launching and killing programs",
-    "mod-Shift-Enter  Launch xterminal",
-    "mod-p            Launch dmenu",
-    "mod-Shift-p      Launch gmrun",
+    "mod-Shift-Enter  Launch 'alacritty' terminal",
+    "mod-Shift-s      Launch 'flameshot' to screenshot",
+    "mod-p            Launch 'dmenu_run'",
     "mod-Shift-c      Close/kill the focused window",
-    "mod-Space        Rotate through the available layout algorithms",
-    "mod-Shift-Space  Reset the layouts on the current workSpace to default",
-    "mod-n            Resize/refresh viewed windows to the correct size",
     "mod-Shift-/      Show this help message with the default keybindings",
     "",
     "-- move focus up or down the window stack",
-    "mod-Tab        Move focus to the next window",
-    "mod-Shift-Tab  Move focus to the previous window",
     "mod-j          Move focus to the next window",
     "mod-k          Move focus to the previous window",
     "mod-m          Move focus to the master window",
@@ -322,12 +306,13 @@ help = unlines ["The default modifier key is 'alt'. Default keybindings:",
     "mod-Shift-j  Swap the focused window with the next window",
     "mod-Shift-k  Swap the focused window with the previous window",
     "",
-    "-- resizing the master/slave ratio",
-    "mod-h  Shrink the master area",
-    "mod-l  Expand the master area",
-    "",
-    "-- floating layer support",
-    "mod-t  Push window back into tiling; unfloat and re-tile it",
+    "-- workspace layout",
+    "mod-Space        Rotate through the available layout algorithms",
+    "mod-Shift-Space  Reset the layouts on the current workspace to default",
+    "mod-n            Resize/refresh viewed windows to the correct size",
+    "mod-h            Shrink the master area",
+    "mod-l            Expand the master area",
+    "mod-t            Push window back into tiling; unfloat and re-tile it",
     "",
     "-- increase or decrease number of windows in the master area",
     "mod-comma  (mod-,)   Increment the number of windows in the master area",
@@ -336,9 +321,9 @@ help = unlines ["The default modifier key is 'alt'. Default keybindings:",
     "-- quit, or restart",
     "mod-Shift-q  Quit xmonad",
     "mod-q        Restart xmonad",
-    "mod-[1..9]   Switch to workSpace N",
     "",
     "-- Workspaces & screens",
+    "mod-[1..9]         Switch to workSpace N",
     "mod-Shift-[1..9]   Move client to workspace N",
     "mod-{w,e,r}        Switch to physical/Xinerama screens 1, 2, or 3",
     "mod-Shift-{w,e,r}  Move client to screen 1, 2, or 3",
