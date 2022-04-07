@@ -129,11 +129,20 @@ in
     };
     aliases = {
       co = "checkout";
-      ci = "commit";
-      cia = "commit --amend";
-      cian = "commit --amend --no-edit";
       st = "status -sb";
-      fpush = "push --force-with-lease";
+      d = "diff";
+      dc = "diff --cached";
+      aa = "add .";
+      ai = "add -i";
+      c = "commit";
+      cm = "commit -m";
+      ca = "commit --amend";
+      cam = "commit --amend -m";
+      can = "commit --amend --no-edit";
+      p = "push";
+      pf = "push --force-with-lease";
+      rb = "rebase";
+      rbi = "rebase -i";
     };
   };
 
