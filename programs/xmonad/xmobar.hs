@@ -2,7 +2,7 @@ Config { overrideRedirect = False
         , font = "xft:Fira Code:size=12:antialias=true"
         , bgColor  = "#5f5f5f"
         , fgColor  = "#f8f8f2"
-        , position = Top
+        , position = TopW L 96
         , commands = [ Run Cpu
                         [ "-L", "3"
                         , "-H", "50"
@@ -13,9 +13,12 @@ Config { overrideRedirect = False
                      , Run Swap [] 10
                      , Run Date "%a %Y-%m-%d <fc=#8be9fd>%H:%M</fc>" "date" 10
                      , Run XMonadLog
+                     , Run Kbd [("us(dvorak)", "US"), ("ru", "RU")]
+                     , Run Wireless ""
+                        [ "--template", "wlan <qualityvbar>"
+                        ] 10
                      ]
         , sepChar  = "%"
         , alignSep = "}{"
-        --, template = "%XMonadLog% }{ %alsa:default:Master% | %cpu% | %memory% * %swap% | %EGPF% | %date% "
-        , template = "%XMonadLog% }{ %cpu% | %memory% * %swap% | %date% "
+        , template = "%XMonadLog% }{ %cpu% | %memory% * %swap% <hspace=60/> %wi% | <box> %kbd% </box> | %date% "
         }
