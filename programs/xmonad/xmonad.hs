@@ -68,7 +68,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- launch a terminal
     [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
 
-    -- launch dmenu
+    -- launch a 'flameshot' to screenshot
+    , ((modm .|. shiftMask, xK_s     ), safeSpawn "flameshot" ["gui"])
+
+    -- launch 'dmenu_run' to choose applications
     , ((modm,               xK_p     ), spawn "dmenu_run")
 
     -- close focused window
@@ -130,9 +133,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- Run xmessage with a summary of the default keybindings (useful for beginners)
     , ((modm .|. shiftMask, xK_slash ), xmessage help)
-
-    -- Cut screenshot
-    , ((modm .|. shiftMask, xK_s     ), safeSpawn "flameshot" ["gui"])
 
     ]
     ++
