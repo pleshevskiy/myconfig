@@ -41,17 +41,24 @@ in
   home.stateVersion = "21.11";
 
   home.packages = with pkgs; [
-    dmenu          # menu for x window system
-    xmobar         # a minimalistic text based status bar
-    flameshot      # powerful yet simple to use screenshot software
+    # system ui
+    dmenu           # menu for x window system
+    xmobar          # a minimalistic text based status bar
+    flameshot       # powerful yet simple to use screenshot software
 
-    xh             # friendly and fast tool for sending HTTP requests
-    fd             # a simple, fast and user-friendly alternative to find
-    bat            # a cat clone with syntax highlighting and git integration
+    # tools
+    xh              # friendly and fast tool for sending HTTP requests
+    fd              # a simple, fast and user-friendly alternative to find
+    bat             # a cat clone with syntax highlighting and git integration
 
-    postgresql_12  # 🤷 I need only psql
+    # haskell
+    stylish-haskell # formatter
 
-    librewolf      # a fork of firefox, focused on privacy, security and freedom
+    # database
+    postgresql_12   # 🤷 I need only psql
+
+    # browser
+    librewolf       # a fork of firefox, focused on privacy, security and freedom
   ];
 
   home.sessionVariables = {
@@ -165,7 +172,7 @@ in
     # add config for xmonad window manager
     # "xmonad/xmonad.hs".source = ../programs/xmonad/xmonad.hs;
     # "xmobar/xmobar.hs".source = ../programs/xmonad/xmobar.hs;
+
+    "stylish-haskell/config.yaml".source = ../programs/stylish-haskell/config.yml;
   };
-
-
 }

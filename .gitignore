@@ -27,3 +27,8 @@
 !/programs/xmonad
 /programs/xmonad/*
 !/programs/xmonad/*.hs
+
+!/programs/stylish-haskell
+/programs/stylish-haskell/*
+!/programs/stylish-haskell/config.yml
+
