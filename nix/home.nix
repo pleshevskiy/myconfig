@@ -16,6 +16,8 @@ in
     })
   ];
 
+  targets.genericLinux.enable = true;
+
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
   home.username = secrets.home.name;
@@ -54,6 +56,31 @@ in
 
   home.sessionVariables = {
     EDITOR = "nvim";
+  };
+
+  xsession = {
+    enable = true;
+
+    windowManager.xmonad = {
+      enable = true;
+      enableContribAndExtras = true;
+    };
+  };
+
+  services.trayer = {
+    enable = true;
+    settings = {
+      SetDockType = true;
+      SetPartialStrut = true;
+      expand = true;
+      transparent = true;
+      alpha = 50;
+      edge = "top";
+      align = "right";
+      width = 4;
+      height = 24;
+      tint = "0x5f5f5f";
+    };
   };
 
   # Let Home Manager install and manage itself.
@@ -131,16 +158,5 @@ in
     # "xmobar/xmobar.hs".source = ../programs/xmonad/xmobar.hs;
   };
 
-  xsession = {
-    enable = true;
 
-    profileExtra = ''
-      systemctl --user restart setxkbmap.service
-    '';
-
-    windowManager.xmonad = {
-      enable = true;
-      enableContribAndExtras = true;
-    };
-  };
 }
