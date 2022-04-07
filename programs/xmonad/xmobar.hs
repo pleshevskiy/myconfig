@@ -13,7 +13,7 @@ Config { overrideRedirect = False
                      , Run Swap [] 10
                      , Run Date "%a %Y-%m-%d <fc=#8be9fd>%H:%M</fc>" "date" 10
                      , Run XMonadLog
-                     , Run Kbd [("us(dvorak)", "US"), ("ru", "RU")]
+                     , Run Kbd [("us(dvorak)", "us"), ("ru", "ru")]
                      , Run Wireless ""
                         [ "--template", "wlan <qualityvbar>"
                         ] 10
