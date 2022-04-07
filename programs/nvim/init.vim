@@ -27,6 +27,9 @@ nnoremap <leader>ev :split $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 " }}}
 
+cabbrev bsp belowright split
+cabbrev rvsp belowright vsplit
+
 " Markdown file settings {{{
 aug filetype_md
   au!
@@ -68,7 +71,7 @@ let g:sql_type_default = 'pgsql'
 let g:neoformat_try_node_exe = 1
 aug fmt
   au!
-  au FileType javascript,javascriptreact,typescript,typescriptreact,rust
+  au FileType javascript,javascriptreact,typescript,typescriptreact,rust,haskell
         \ au BufWritePre <buffer> undojoin | Neoformat
 aug END
 " }}}
