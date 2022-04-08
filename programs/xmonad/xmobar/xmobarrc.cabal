@@ -1,0 +1,26 @@
+cabal-version: 2.2
+
+-- This file has been generated from package.yaml by hpack version 0.34.4.
+--
+-- see: https://github.com/sol/hpack
+
+name:           xmobarrc
+version:        0.1.0
+synopsis:       My xmobar configuration
+homepage:       https://github.com/pleshevskiy/myconfig
+author:         Pleshevskiy
+maintainer:     dmitriy@ideascup.me
+license:        Beerware
+build-type:     Simple
+
+executable xmobar
+  hs-source-dirs:
+      src
+  main-is: xmobar.hs
+  other-modules:
+      Paths_xmobarrc
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base
+    , xmobar
+  default-language: Haskell2010

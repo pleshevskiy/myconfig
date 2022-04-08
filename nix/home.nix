@@ -43,7 +43,6 @@ in
   home.packages = with pkgs; [
     # system ui
     dmenu           # menu for x window system
-    xmobar          # a minimalistic text based status bar
     flameshot       # powerful yet simple to use screenshot software
 
     # tools
@@ -81,12 +80,12 @@ in
       SetPartialStrut = true;
       expand = true;
       transparent = true;
-      alpha = 50;
+      alpha = 0;
       edge = "top";
       align = "right";
       width = 4;
-      height = 24;
-      tint = "0x5f5f5f";
+      height = 20;
+      tint = "0xff222222";
     };
   };
 

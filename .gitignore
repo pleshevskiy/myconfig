@@ -10,6 +10,3 @@
 
 !/programs
 
-/programs/xmonad/*
-!/programs/xmonad/*.hs
-

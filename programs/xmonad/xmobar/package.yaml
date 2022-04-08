@@ -1,0 +1,21 @@
+name:                xmobarrc
+version:             0.1.0
+synopsis:            My xmobar configuration
+license:             Beerware
+author:              Pleshevskiy
+maintainer:          dmitriy@ideascup.me
+homepage:            https://github.com/pleshevskiy/myconfig
+
+dependencies:
+- base
+- xmobar
+
+executables:
+  xmobar:
+    source-dirs: src
+    main: xmobar.hs
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+
