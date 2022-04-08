@@ -127,6 +127,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- Quit xmonad
     , ((mod4Mask .|. shiftMask, xK_q ), io (exitWith ExitSuccess))
+    -- Lock screen
+    , ((mod4Mask              , xK_l ), spawn "i3lock -e -c 000000")
 
     -- Restart xmonad
     , ((modm              , xK_q     ), spawn "xmonad --recompile; xmonad --restart")
@@ -318,9 +320,10 @@ help = unlines ["The default modifier key is 'alt'. Default keybindings:",
     "mod-comma  (mod-,)   Increment the number of windows in the master area",
     "mod-period (mod-.)   Deincrement the number of windows in the master area",
     "",
-    "-- quit, or restart",
-    "mod-Shift-q  Quit xmonad",
-    "mod-q        Restart xmonad",
+    "-- System ",
+    "mod4-l        Lock screen",
+    "mod4-Shift-q  Quit xmonad",
+    "mod-q         Restart xmonad",
     "",
     "-- Workspaces & screens",
     "mod-[1..9]         Switch to workSpace N",

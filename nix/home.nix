@@ -93,7 +93,7 @@ in
   services.screen-locker = {
     enable = true;
 
-    lockCmd = "/usr/bin/i3lock -c 000000";
+    lockCmd = "/usr/bin/i3lock -e -c 000000";
 
     inactiveInterval = 5;
   };
