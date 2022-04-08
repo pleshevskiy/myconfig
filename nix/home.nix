@@ -90,6 +90,14 @@ in
     };
   };
 
+  services.screen-locker = {
+    enable = true;
+
+    lockCmd = "/usr/bin/i3lock -c 000000";
+
+    inactiveInterval = 5;
+  };
+
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
