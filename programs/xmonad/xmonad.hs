@@ -15,7 +15,9 @@ import           XMonad.Hooks.EwmhDesktops
 import           XMonad.Hooks.ManageDocks
 import           XMonad.Hooks.StatusBar
 import           XMonad.Hooks.StatusBar.PP
+import           XMonad.Layout.NoBorders
 import           XMonad.Layout.PerWorkspace
+import           XMonad.Util.EZConfig
 import           XMonad.Util.Run
 
 import qualified Data.Map                   as M
@@ -64,82 +66,85 @@ myFocusedBorderColor = "#f00"
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
 --
-myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
+myKeys conf = mkKeymap conf $
 
   -- launch a terminal
-  [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
+  [ ("M-S-<Return>", spawn $ XMonad.terminal conf)
 
   -- launch a 'flameshot' to screenshot
-  , ((modm .|. shiftMask, xK_s     ), safeSpawn "flameshot" ["gui"])
+  , ("M-S-s", safeSpawn "flameshot" ["gui"])
 
   -- launch 'dmenu_run' to choose applications
-  , ((modm,               xK_p     ), spawn "dmenu_run")
+  , ("M-p", spawn "dmenu_run")
 
   -- close focused window
-  , ((modm .|. shiftMask, xK_c     ), kill)
+  , ("M-S-c", kill)
 
    -- Rotate through the available layout algorithms
-  , ((modm,               xK_space ), sendMessage NextLayout)
+  , ("M-<Space>", sendMessage NextLayout)
 
   --  Reset the layouts on the current workspace to default
-  , ((modm .|. shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf)
+  , ("M-S-<Space>", setLayout $ XMonad.layoutHook conf)
 
   -- Resize viewed windows to the correct size
-  , ((modm,               xK_n     ), refresh)
+  , ("M-n", refresh)
 
   -- Move focus to the next window
-  , ((modm,               xK_j     ), windows W.focusDown)
+  , ("M-j", windows W.focusDown)
 
   -- Move focus to the previous window
-  , ((modm,               xK_k     ), windows W.focusUp)
+  , ("M-k", windows W.focusUp)
 
   -- Move focus to the master window
-  , ((modm,               xK_m     ), windows W.focusMaster)
+  , ("M-m", windows W.focusMaster)
 
   -- Swap the focused window and the master window
-  , ((modm,               xK_Return), windows W.swapMaster)
+  , ("M-<Return>", windows W.swapMaster)
 
   -- Swap the focused window with the next window
-  , ((modm .|. shiftMask, xK_j     ), windows W.swapDown)
+  , ("M-S-j", windows W.swapDown)
 
   -- Swap the focused window with the previous window
-  , ((modm .|. shiftMask, xK_k     ), windows W.swapUp)
+  , ("M-S-k", windows W.swapUp)
 
   -- Shrink the master area
-  , ((modm,               xK_h     ), sendMessage Shrink)
+  , ("M-h", sendMessage Shrink)
 
   -- Expand the master area
-  , ((modm,               xK_l     ), sendMessage Expand)
+  , ("M-l", sendMessage Expand)
 
   -- Push window back into tiling
-  , ((modm,               xK_t     ), withFocused $ windows . W.sink)
+  , ("M-t", withFocused $ windows . W.sink)
 
   -- Increment the number of windows in the master area
-  , ((modm              , xK_comma ), sendMessage $ IncMasterN 1)
+  , ("M-,", sendMessage $ IncMasterN 1)
 
   -- Deincrement the number of windows in the master area
-  , ((modm              , xK_period), sendMessage $ IncMasterN (-1))
+  , ("M-.", sendMessage $ IncMasterN (-1))
 
   -- Toggle the status bar gap
   -- Use this binding with avoidStruts from Hooks.ManageDocks.
   -- See also the statusBar function from Hooks.DynamicLog.
   --
-  -- , ((modm              , xK_b     ), sendMessage ToggleStruts)
+  , ("M-b", sendMessage ToggleStruts)
 
   -- Quit xmonad
-  , ((mod4Mask .|. shiftMask, xK_q ), io exitSuccess)
+  , ("M4-S-q", io exitSuccess)
   -- Lock screen
-  , ((mod4Mask              , xK_l ), spawn "i3lock -e -c 000000")
+  , ("M4-l", spawn "i3lock -e -c 000000")
 
   -- Change volume
-  , ((mod4Mask              , xK_Up  ), spawn "amixer -D pulse sset Master 1%+")
-  , ((mod4Mask              , xK_Down), spawn "amixer -D pulse sset Master 1%-")
+  , ("<XF86AudioMute>", spawn "amixer -qD pulse sset Master toggle")
+    --
+  , ("<XF86AudioRaiseVolume>", spawn "amixer -qD pulse sset Master 1%+")
+    --
+  , ("<XF86AudioLowerVolume>", spawn "amixer -qD pulse sset Master 1%-")
 
   -- Restart xmonad
-  , ((modm              , xK_q     ), spawn "xmonad --recompile; xmonad --restart")
+  , ("M-q", spawn "xmonad --recompile; xmonad --restart")
 
   -- Run xmessage with a summary of the default keybindings (useful for beginners)
-  , ((modm .|. shiftMask, xK_slash ), xmessage help)
+  , ("M-S-/", xmessage help)
 
   ]
   ++
@@ -148,18 +153,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
   -- mod-[1..9], Switch to workspace N
   -- mod-shift-[1..9], Move client to workspace N
   --
-  [((m .|. modm, k), windows $ f i)
-    | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
-    , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
-  ++
-
-  --
-  -- mod-{w,e,r}, Switch to physical/Xinerama screens 1, 2, or 3
-  -- mod-shift-{w,e,r}, Move client to screen 1, 2, or 3
-  --
-  [((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
-    | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
-    , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
+  [("M-" ++ m ++ show k, windows $ f i)
+    | (i, k) <- zip (XMonad.workspaces conf) [1..9]
+    , (f, m) <- [(W.greedyView, ""), (W.shift, "S-")]]
 
 
 ------------------------------------------------------------------------
@@ -190,12 +186,15 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList
 -- which denotes layout choice.
 --
 myLayout = avoidStruts
-  $ onWorkspaces ["web", "chat"] (makeLayout (1/2))
-  $ makeLayout (1/1.5)
+  $ onWorkspaces ["web", "chat"] (myFull ||| myTall (1/2))
+  $ makeDefaultLayout (1/1.5)
   where
-    makeLayout ratio = makeLayoutTall ratio ||| Mirror (makeLayoutTall ratio) ||| Full
+    makeDefaultLayout ratio = myTall ratio
+      ||| Mirror (myTall ratio)
+      ||| myFull
 
-    makeLayoutTall = Tall nmaster delta
+    myTall = smartBorders . Tall nmaster delta
+    myFull = noBorders Full
 
     -- The default number of windows in the master pane
     nmaster = 1
@@ -341,6 +340,7 @@ help = unlines
   , "mod-button3  Set the window to floating mode and resize by dragging"
   , ""
   , "-- Volume"
-  , "mod4-Up            Increase volume by 1%"
-  , "mod4-Down          Decrease volume by 1%"
+  , "<XF86AudioMute>          Mute/Unmute"
+  , "<XF86AudioRaiseVolume>   Increase volume by 1%"
+  , "<XF86AudioLowerVolume>   Decrease volume by 1%"
   ]
