@@ -188,8 +188,9 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList
 -- which denotes layout choice.
 --
 myLayout = avoidStruts
-  $ onWorkspaces ["web", "chat"] (myFull ||| myTall (1/2))
-  $ makeDefaultLayout (1/1.5)
+  $ onWorkspace "web" (myFull ||| Mirror (myTall (2/3)))
+  $ onWorkspace "chat" (myTall (1/2))
+  $ makeDefaultLayout (2/3)
   where
     makeDefaultLayout ratio = myTall ratio
       ||| Mirror (myTall ratio)
