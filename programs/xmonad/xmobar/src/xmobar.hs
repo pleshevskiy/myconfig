@@ -52,7 +52,7 @@ config n = defaultConfig
   , alignSep = "}{"
   , template = "%XMonadLog%"
             <> "} %date% <hspace=60/> %cpu% | %memory% * %swap% | %wlxd03745e1e87bwi%"
-            <> "{ <fn=1><box> %kbd% </box> <fc=#ee9a00>%time%</fc></fn>"
+            <> "{ Vol: %volume% <fn=1><box> %kbd% </box> <fc=#ee9a00>%time%</fc></fn>"
   }
 
 myCommands :: [Runnable]
@@ -73,7 +73,6 @@ myCommands =
   , Run $ Date "%a %d %b %Y" "date" (10 `seconds`)
   , Run $ Date "%H:%M:%S" "time" (1 `seconds`)
   , Run $ Kbd [("us(dvorak)", "us"), ("ru", "ru")]
-  , Run $ XMonadLog
   , Run $
       Wireless
         "wlxd03745e1e87b"
@@ -86,6 +85,8 @@ myCommands =
         , "--high"    , colorGreen
         ]
         (10 `seconds`)
+  , Run $ Com "/bin/bash" ["-c", "~/.config/xmobar/scripts/get_volume.sh"] "volume" 1
+  , Run XMonadLog
   ]
   where
     seconds, minutes :: Int -> Int
