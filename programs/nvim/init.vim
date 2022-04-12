@@ -104,6 +104,15 @@ let g:NERDTreeGitStatusIndicatorMapCustom = {
 let g:lsp_preview_max_width = 60
 let g:lsp_diagnostics_float_cursor = 1
 
+" if (executable('haskell-language-server-wrapper'))
+"   echom "Haskell lsp installed"
+"   au User lsp_setup call lsp#register_server({
+"       \ 'name': 'haskell-language-server-wrapper',
+"       \ 'cmd': {server_info->['haskell-language-server-wrapper', 'lsp']},
+"       \ 'whitelist': ['haskell'],
+"       \ })
+" endif
+
 function! s:on_lsp_buffer_enabled() abort
   setlocal omnifunc=lsp#complete
   if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif

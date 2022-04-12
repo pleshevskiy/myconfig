@@ -122,6 +122,7 @@ in
     };
 
     initExtraFirst = ''
+      # nix
       if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then
         source $HOME/.nix-profile/etc/profile.d/nix.sh;
       fi
@@ -129,6 +130,11 @@ in
       source $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh
 
       export NIX_PATH=$HOME/.nix-defexpr/channels''${NIX_PATH:+:$NIX_PATH}
+
+      # ghcup
+      if [ -f "$HOME/.ghcup/env" ]; then
+        source "$HOME/.ghcup/env"
+      fi
     '';
   };
 
