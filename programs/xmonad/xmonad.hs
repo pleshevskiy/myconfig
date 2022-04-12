@@ -126,7 +126,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- , ((modm              , xK_b     ), sendMessage ToggleStruts)
 
     -- Quit xmonad
-    , ((mod4Mask .|. shiftMask, xK_q ), io (exitWith ExitSuccess))
+    , ((mod4Mask .|. shiftMask, xK_q ), io exitSuccess)
     -- Lock screen
     , ((mod4Mask              , xK_l ), spawn "i3lock -e -c 000000")
 
@@ -160,18 +160,15 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 ------------------------------------------------------------------------
 -- Mouse bindings: default actions bound to mouse events
 --
-myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
-
+myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList
     -- mod-button1, Set the window to floating mode and move by dragging
-    [ ((modm, button1), (\w -> focus w >> mouseMoveWindow w
-                                       >> windows W.shiftMaster))
+    [ ((modm, button1), \w -> focus w >> mouseMoveWindow w >> windows W.shiftMaster)
 
     -- mod-button2, Raise the window to the top of the stack
-    , ((modm, button2), (\w -> focus w >> windows W.shiftMaster))
+    , ((modm, button2), \w -> focus w >> windows W.shiftMaster)
 
     -- mod-button3, Set the window to floating mode and resize by dragging
-    , ((modm, button3), (\w -> focus w >> mouseResizeWindow w
-                                       >> windows W.shiftMaster))
+    , ((modm, button3), \w -> focus w >> mouseResizeWindow w >> windows W.shiftMaster)
 
     -- you may also bind events to the mouse scroll wheel (button4 and button5)
     ]
@@ -196,7 +193,7 @@ myLayout = avoidStruts (tiled ||| Mirror tiled ||| Full)
      nmaster = 1
 
      -- Default proportion of screen occupied by master pane
-     ratio   = 1/2
+     ratio   = 1/4
 
      -- Percent of screen to increment by when resizing panes
      delta   = 3/100
@@ -220,7 +217,10 @@ myManageHook = composeAll
     [ className =? "MPlayer"        --> doFloat
     , className =? "Gimp"           --> doFloat
     , resource  =? "desktop_window" --> doIgnore
-    , resource  =? "kdesktop"       --> doIgnore ]
+    , resource  =? "kdesktop"       --> doIgnore
+    -- my libs
+    , resource  =? "hwt"            --> doFloat
+    ]
 
 ------------------------------------------------------------------------
 -- Event handling
@@ -264,74 +264,74 @@ main = xmonad . ewmhFullscreen . ewmh . xmobarProp $ defaults
 --
 -- No need to modify this.
 --
-defaults = def {
-      -- simple stuff
-        terminal           = myTerminal,
-        focusFollowsMouse  = myFocusFollowsMouse,
-        clickJustFocuses   = myClickJustFocuses,
-        borderWidth        = myBorderWidth,
-        modMask            = myModMask,
-        workspaces         = myWorkspaces,
-        normalBorderColor  = myNormalBorderColor,
-        focusedBorderColor = myFocusedBorderColor,
-
-      -- key bindings
-        keys               = myKeys,
-        mouseBindings      = myMouseBindings,
-
-      -- hooks, layouts
-        layoutHook         = myLayout,
-        manageHook         = myManageHook,
-        handleEventHook    = myEventHook,
-        logHook            = myLogHook,
-        startupHook        = myStartupHook
-    }
+defaults = def
+  -- simple stuff
+  { terminal           = myTerminal
+  , focusFollowsMouse  = myFocusFollowsMouse
+  , clickJustFocuses   = myClickJustFocuses
+  , borderWidth        = myBorderWidth
+  , modMask            = myModMask
+  , workspaces         = myWorkspaces
+  , normalBorderColor  = myNormalBorderColor
+  , focusedBorderColor = myFocusedBorderColor
+  -- key bindings
+  , keys               = myKeys
+  , mouseBindings      = myMouseBindings
+  -- hooks, layouts
+  , layoutHook         = myLayout
+  , manageHook         = myManageHook
+  , handleEventHook    = myEventHook
+  , logHook            = myLogHook
+  , startupHook        = myStartupHook
+  }
 
 -- | Finally, a copy of the default bindings in simple textual tabular format.
 help :: String
-help = unlines ["The default modifier key is 'alt'. Default keybindings:",
-    "",
-    "-- launching and killing programs",
-    "mod-Shift-Enter  Launch 'alacritty' terminal",
-    "mod-Shift-s      Launch 'flameshot' to screenshot",
-    "mod-p            Launch 'dmenu_run'",
-    "mod-Shift-c      Close/kill the focused window",
-    "mod-Shift-/      Show this help message with the default keybindings",
-    "",
-    "-- move focus up or down the window stack",
-    "mod-j          Move focus to the next window",
-    "mod-k          Move focus to the previous window",
-    "mod-m          Move focus to the master window",
-    "",
-    "-- modifying the window order",
-    "mod-Return   Swap the focused window and the master window",
-    "mod-Shift-j  Swap the focused window with the next window",
-    "mod-Shift-k  Swap the focused window with the previous window",
-    "",
-    "-- workspace layout",
-    "mod-Space        Rotate through the available layout algorithms",
-    "mod-Shift-Space  Reset the layouts on the current workspace to default",
-    "mod-n            Resize/refresh viewed windows to the correct size",
-    "mod-h            Shrink the master area",
-    "mod-l            Expand the master area",
-    "mod-t            Push window back into tiling; unfloat and re-tile it",
-    "",
-    "-- increase or decrease number of windows in the master area",
-    "mod-comma  (mod-,)   Increment the number of windows in the master area",
-    "mod-period (mod-.)   Deincrement the number of windows in the master area",
-    "",
-    "-- System ",
-    "mod4-l        Lock screen",
-    "mod4-Shift-q  Quit xmonad",
-    "mod-q         Restart xmonad",
-    "",
-    "-- Workspaces & screens",
-    "mod-[1..9]         Switch to workSpace N",
-    "mod-Shift-[1..9]   Move client to workspace N",
-    "mod-{w,e,r}        Switch to physical/Xinerama screens 1, 2, or 3",
-    "mod-Shift-{w,e,r}  Move client to screen 1, 2, or 3",
-    "",
-    "-- Mouse bindings: default actions bound to mouse events",
-    "mod-button1  Set the window to floating mode and move by dragging",
-    "mod-button2  Raise the window to the top of the stack",
-    "mod-button3  Set the window to floating mode and resize by dragging"]
+help = unlines
+  [ "The default modifier key is 'alt'. Default keybindings:"
+  , ""
+  , "-- launching and killing programs"
+  , "mod-Shift-Enter  Launch 'alacritty' terminal"
+  , "mod-Shift-s      Launch 'flameshot' to screenshot"
+  , "mod-p            Launch 'dmenu_run'"
+  , "mod-Shift-c      Close/kill the focused window"
+  , "mod-Shift-/      Show this help message with the default keybindings"
+  , ""
+  , "-- move focus up or down the window stack"
+  , "mod-j          Move focus to the next window"
+  , "mod-k          Move focus to the previous window"
+  , "mod-m          Move focus to the master window"
+  , ""
+  , "-- modifying the window order"
+  , "mod-Return   Swap the focused window and the master window"
+  , "mod-Shift-j  Swap the focused window with the next window"
+  , "mod-Shift-k  Swap the focused window with the previous window"
+  , ""
+  , "-- workspace layout"
+  , "mod-Space        Rotate through the available layout algorithms"
+  , "mod-Shift-Space  Reset the layouts on the current workspace to default"
+  , "mod-n            Resize/refresh viewed windows to the correct size"
+  , "mod-h            Shrink the master area"
+  , "mod-l            Expand the master area"
+  , "mod-t            Push window back into tiling; unfloat and re-tile it"
+  , ""
+  , "-- increase or decrease number of windows in the master area"
+  , "mod-comma  (mod-,)   Increment the number of windows in the master area"
+  , "mod-period (mod-.)   Deincrement the number of windows in the master area"
+  , ""
+  , "-- System "
+  , "mod4-l        Lock screen"
+  , "mod4-Shift-q  Quit xmonad"
+  , "mod-q         Restart xmonad"
+  , ""
+  , "-- Workspaces & screens"
+  , "mod-[1..9]         Switch to workSpace N"
+  , "mod-Shift-[1..9]   Move client to workspace N"
+  , "mod-{w,e,r}        Switch to physical/Xinerama screens 1, 2, or 3"
+  , "mod-Shift-{w,e,r}  Move client to screen 1, 2, or 3"
+  , ""
+  , "-- Mouse bindings: default actions bound to mouse events"
+  , "mod-button1  Set the window to floating mode and move by dragging"
+  , "mod-button2  Raise the window to the top of the stack"
+  , "mod-button3  Set the window to floating mode and resize by dragging"
+  ]
