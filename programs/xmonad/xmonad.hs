@@ -130,15 +130,17 @@ myKeys conf = mkKeymap conf $
 
   -- Quit xmonad
   , ("M4-S-q", io exitSuccess)
+
   -- Lock screen
   , ("M4-l", spawn "i3lock -e -c 000000")
 
   -- Change volume
-  , ("<XF86AudioMute>", spawn "amixer -qD pulse sset Master toggle")
-    --
-  , ("<XF86AudioRaiseVolume>", spawn "amixer -qD pulse sset Master 1%+")
-    --
-  , ("<XF86AudioLowerVolume>", spawn "amixer -qD pulse sset Master 1%-")
+  , ("<XF86AudioMute>",         spawn "amixer -qD pulse sset Master toggle")
+  , ("<XF86AudioRaiseVolume>",  spawn "amixer -qD pulse sset Master 1%+")
+  , ("<XF86AudioLowerVolume>",  spawn "amixer -qD pulse sset Master 1%-")
+
+  -- Keyboard apps
+  , ("<XF86Calculator>", spawn "gnome-calculator")
 
   -- Restart xmonad
   , ("M-q", spawn "xmonad --recompile; xmonad --restart")
@@ -324,9 +326,9 @@ help = unlines
   , "mod-period (mod-.)   Deincrement the number of windows in the master area"
   , ""
   , "-- System "
-  , "mod4-l        Lock screen"
-  , "mod4-Shift-q  Quit xmonad"
-  , "mod-q         Restart xmonad"
+  , "mod4-l         Lock screen"
+  , "mod4-Shift-q   Quit xmonad"
+  , "mod-q          Restart xmonad"
   , ""
   , "-- Workspaces & screens"
   , "mod-[1..9]         Switch to workSpace N"
