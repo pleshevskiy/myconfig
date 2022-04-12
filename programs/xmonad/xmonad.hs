@@ -193,7 +193,7 @@ myLayout = avoidStruts (tiled ||| Mirror tiled ||| Full)
      nmaster = 1
 
      -- Default proportion of screen occupied by master pane
-     ratio   = 1/4
+     ratio   = 1/1.5
 
      -- Percent of screen to increment by when resizing panes
      delta   = 3/100
