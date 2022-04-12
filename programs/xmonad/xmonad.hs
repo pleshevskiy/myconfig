@@ -15,10 +15,11 @@ import           XMonad.Hooks.EwmhDesktops
 import           XMonad.Hooks.ManageDocks
 import           XMonad.Hooks.StatusBar
 import           XMonad.Hooks.StatusBar.PP
+import           XMonad.Layout.PerWorkspace
 import           XMonad.Util.Run
 
-import qualified Data.Map                  as M
-import qualified XMonad.StackSet           as W
+import qualified Data.Map                   as M
+import qualified XMonad.StackSet            as W
 
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
@@ -53,7 +54,7 @@ myModMask       = mod1Mask
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
-myWorkspaces    = map show [1..9]
+myWorkspaces    = ["web", "front", "back", "chat"] <> map show [5..9]
 
 -- Border colors for unfocused and focused windows, respectively.
 --
@@ -90,19 +91,19 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_j     ), windows W.focusDown)
 
     -- Move focus to the previous window
-    , ((modm,               xK_k     ), windows W.focusUp  )
+    , ((modm,               xK_k     ), windows W.focusUp)
 
     -- Move focus to the master window
-    , ((modm,               xK_m     ), windows W.focusMaster  )
+    , ((modm,               xK_m     ), windows W.focusMaster)
 
     -- Swap the focused window and the master window
     , ((modm,               xK_Return), windows W.swapMaster)
 
     -- Swap the focused window with the next window
-    , ((modm .|. shiftMask, xK_j     ), windows W.swapDown  )
+    , ((modm .|. shiftMask, xK_j     ), windows W.swapDown)
 
     -- Swap the focused window with the previous window
-    , ((modm .|. shiftMask, xK_k     ), windows W.swapUp    )
+    , ((modm .|. shiftMask, xK_k     ), windows W.swapUp)
 
     -- Shrink the master area
     , ((modm,               xK_h     ), sendMessage Shrink)
@@ -114,10 +115,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_t     ), withFocused $ windows . W.sink)
 
     -- Increment the number of windows in the master area
-    , ((modm              , xK_comma ), sendMessage (IncMasterN 1))
+    , ((modm              , xK_comma ), sendMessage $ IncMasterN 1)
 
     -- Deincrement the number of windows in the master area
-    , ((modm              , xK_period), sendMessage (IncMasterN (-1)))
+    , ((modm              , xK_period), sendMessage $ IncMasterN (-1))
 
     -- Toggle the status bar gap
     -- Use this binding with avoidStruts from Hooks.ManageDocks.
@@ -184,19 +185,19 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList
 -- The available layouts.  Note that each layout is separated by |||,
 -- which denotes layout choice.
 --
-myLayout = avoidStruts (tiled ||| Mirror tiled ||| Full)
+myLayout = avoidStruts
+  $ onWorkspaces ["web", "chat"] (makeLayout (1/2))
+  $ makeLayout (1/1.5)
   where
-     -- default tiling algorithm partitions the screen into two panes
-     tiled   = Tall nmaster delta ratio
+    makeLayout ratio = makeLayoutTall ratio ||| Mirror (makeLayoutTall ratio) ||| Full
 
-     -- The default number of windows in the master pane
-     nmaster = 1
+    makeLayoutTall = Tall nmaster delta
 
-     -- Default proportion of screen occupied by master pane
-     ratio   = 1/1.5
+    -- The default number of windows in the master pane
+    nmaster = 1
 
-     -- Percent of screen to increment by when resizing panes
-     delta   = 3/100
+    -- Percent of screen to increment by when resizing panes
+    delta   = 3/100
 
 ------------------------------------------------------------------------
 -- Window rules:
