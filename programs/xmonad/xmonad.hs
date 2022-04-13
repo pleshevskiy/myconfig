@@ -219,11 +219,13 @@ myLayout = avoidStruts
 -- 'className' and 'resource' are used below.
 --
 myManageHook = composeAll
-  [ className =? "MPlayer"                --> doFloat
-  , className =? "Gimp"                   --> doFloat
-  , resource  =? "desktop_window"         --> doIgnore
+  [ resource  =? "desktop_window"         --> doIgnore
   , resource  =? "kdesktop"               --> doIgnore
+  -- apps
+  , className =? "Gimp"                   --> doFloat
   , className =? "Gnome-calculator"       --> doFloat
+  , className =? "Gnome-font-viewer"      --> doFloat
+  , className =? "Org.gnome.Nautilus"     --> doFloat
   , className =? "firefox-trunk-nightly"  --> doShift "web"
   , resource  =? "telegram-desktop"       --> doShift "chat"
   , className =? "Thunderbird"            --> doShift "chat"
