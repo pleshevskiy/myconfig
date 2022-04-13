@@ -187,13 +187,10 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList
 myLayout = avoidStruts
   $ onWorkspace "web" (myTall (1/2) ||| myFull)
   $ onWorkspace "chat" (myTall (1/2))
-  $ makeDefaultLayout (2/3)
+  $ myTall (2/3) ||| myFull
   where
-    makeDefaultLayout ratio = myTall ratio
-      ||| Mirror (myTall ratio)
-      ||| myFull
-
     myTall = smartBorders . Tall nmaster delta
+
     myFull = noBorders Full
 
     -- The default number of windows in the master pane
