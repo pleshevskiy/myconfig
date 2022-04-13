@@ -10,19 +10,21 @@
 import           Data.Monoid
 import           System.Exit
 import           XMonad
-import           XMonad.Actions.EasyMotion  (selectWindow)
+import           XMonad.Actions.CycleSelectedLayouts (cycleThroughLayouts)
+import           XMonad.Actions.EasyMotion           (selectWindow)
 import           XMonad.Hooks.DynamicLog
 import           XMonad.Hooks.EwmhDesktops
 import           XMonad.Hooks.ManageDocks
 import           XMonad.Hooks.StatusBar
 import           XMonad.Hooks.StatusBar.PP
+import           XMonad.Layout.Grid
 import           XMonad.Layout.NoBorders
 import           XMonad.Layout.PerWorkspace
 import           XMonad.Util.EZConfig
 import           XMonad.Util.Run
 
-import qualified Data.Map                   as M
-import qualified XMonad.StackSet            as W
+import qualified Data.Map                            as M
+import qualified XMonad.StackSet                     as W
 
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
@@ -82,7 +84,8 @@ myKeys conf = mkKeymap conf $
   , ("M-S-c", kill)
 
    -- Rotate through the available layout algorithms
-  , ("M-<Space>", sendMessage NextLayout)
+  , ("M-<Space>", cycleThroughLayouts ["Full", "Tall"])
+  , ("M-<Tab>", sendMessage $ JumpToLayout "Grid")
 
   --  Reset the layouts on the current workspace to default
   , ("M-S-<Space>", setLayout $ XMonad.layoutHook conf)
@@ -185,9 +188,9 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList
 -- which denotes layout choice.
 --
 myLayout = avoidStruts
-  $ onWorkspace "web" (myTall (1/2) ||| myFull)
+  $ onWorkspace "web" (myTall (1/2) ||| myFull ||| Grid)
   $ onWorkspace "chat" (myTall (1/2))
-  $ myTall (2/3) ||| myFull
+  $ myTall (2/3) ||| myFull ||| Grid
   where
     myTall = smartBorders . Tall nmaster delta
 
