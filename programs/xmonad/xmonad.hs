@@ -92,22 +92,22 @@ myKeys conf = mkKeymap conf $
 
   -- Easy moution to focus windows
   , ("M-s", selectWindow def >>= (`whenJust` windows . W.focusWindow))
-
+  -- Move focus to the next window
+  , ("M-j", windows W.focusDown)
+  -- Move focus to the previous window
+  , ("M-k", windows W.focusUp)
   -- Move focus to the master window
   , ("M-m", windows W.focusMaster)
 
   -- Swap the focused window and the master window
   , ("M-<Return>", windows W.swapMaster)
-
   -- Swap the focused window with the next window
   , ("M-S-j", windows W.swapDown)
-
   -- Swap the focused window with the previous window
   , ("M-S-k", windows W.swapUp)
 
   -- Shrink the master area
   , ("M-h", sendMessage Shrink)
-
   -- Expand the master area
   , ("M-l", sendMessage Expand)
 
@@ -116,7 +116,6 @@ myKeys conf = mkKeymap conf $
 
   -- Increment the number of windows in the master area
   , ("M-,", sendMessage $ IncMasterN 1)
-
   -- Deincrement the number of windows in the master area
   , ("M-.", sendMessage $ IncMasterN (-1))
 
