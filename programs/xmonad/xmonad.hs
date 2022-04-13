@@ -10,6 +10,7 @@
 import           Data.Monoid
 import           System.Exit
 import           XMonad
+import           XMonad.Actions.EasyMotion  (selectWindow)
 import           XMonad.Hooks.DynamicLog
 import           XMonad.Hooks.EwmhDesktops
 import           XMonad.Hooks.ManageDocks
@@ -89,11 +90,8 @@ myKeys conf = mkKeymap conf $
   -- Resize viewed windows to the correct size
   , ("M-n", refresh)
 
-  -- Move focus to the next window
-  , ("M-j", windows W.focusDown)
-
-  -- Move focus to the previous window
-  , ("M-k", windows W.focusUp)
+  -- Easy moution to focus windows
+  , ("M-s", selectWindow def >>= (`whenJust` windows . W.focusWindow))
 
   -- Move focus to the master window
   , ("M-m", windows W.focusMaster)
@@ -128,8 +126,6 @@ myKeys conf = mkKeymap conf $
   --
   , ("M-b", sendMessage ToggleStruts)
 
-  -- Quit xmonad
-  , ("M4-S-q", io exitSuccess)
 
   -- Lock screen
   , ("M4-l", spawn "i3lock -e -c 000000")
@@ -142,6 +138,8 @@ myKeys conf = mkKeymap conf $
   -- Keyboard apps
   , ("<XF86Calculator>", spawn "gnome-calculator")
 
+  -- Quit xmonad
+  , ("M4-S-q", io exitSuccess)
   -- Restart xmonad
   , ("M-q", spawn "xmonad --recompile; xmonad --restart")
 
