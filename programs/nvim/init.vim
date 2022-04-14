@@ -20,6 +20,7 @@ set nowritebackup
 set updatetime=300
 set shortmess+=c
 set nopaste
+set foldcolumn=0
 " }}}
 
 " Mappings {{{

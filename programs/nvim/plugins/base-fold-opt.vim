@@ -18,5 +18,4 @@ endfunction
 function! s:SetlFold(method, lvl)
   let &foldmethod = a:method
   let &foldlevel = a:lvl
-  let &foldcolumn = 1
 endfunction
