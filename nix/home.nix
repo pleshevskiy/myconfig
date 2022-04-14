@@ -92,7 +92,7 @@ in
   services.screen-locker = {
     enable = true;
 
-    lockCmd = "/usr/bin/i3lock -e -c 000000";
+    lockCmd = "/bin/bash ~/scripts/lock.sh";
 
     inactiveInterval = 5;
   };
@@ -178,14 +178,29 @@ in
     enableZshIntegration = true;
   };
 
-  xdg.configFile = {
-    # add config for alacritty terminal
-    "alacritty/alacritty.yml".source = ../programs/alacritty/alacritty.yml;
+  home.file = {
+    "scripts" = {
+      source = ../scripts;
+      recursive = true;
+    };
 
-    # add config for xmonad window manager
-    # "xmonad/xmonad.hs".source = ../programs/xmonad/xmonad.hs;
-    # "xmobar/xmobar.hs".source = ../programs/xmonad/xmobar.hs;
+    "pictures/wallpapers" = {
+      source = ../wallpapers;
+      recursive = true;
+    };
+  };
 
-    "stylish-haskell/config.yaml".source = ../programs/stylish-haskell/config.yml;
+  xdg = {
+    enable = true;
+    configFile = {
+      # add config for alacritty terminal
+      "alacritty/alacritty.yml".source = ../programs/alacritty/alacritty.yml;
+
+      # add config for xmonad window manager
+      # "xmonad/xmonad.hs".source = ../programs/xmonad/xmonad.hs;
+      # "xmobar/xmobar.hs".source = ../programs/xmonad/xmobar.hs;
+
+      "stylish-haskell/config.yaml".source = ../programs/stylish-haskell/config.yml;
+    };
   };
 }

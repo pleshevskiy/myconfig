@@ -130,7 +130,7 @@ myKeys conf = mkKeymap conf $
 
 
   -- Lock screen
-  , ("M4-l", spawn "i3lock -e -c 000000")
+  , ("M4-l", spawn "bash ~/scripts/lock.sh")
 
   -- Change volume
   , ("<XF86AudioMute>",         spawn "amixer -qD pulse sset Master toggle")

@@ -7,6 +7,12 @@
 !/nix/home.nix
 !/nix/*.example.nix
 
-
 !/programs
+
+!/scripts
+
+!/wallpapers
+/wallpapers/*
+!/wallpapers/*.png
+!/wallpapers/build.sh
 
