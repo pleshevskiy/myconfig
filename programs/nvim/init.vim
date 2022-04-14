@@ -89,6 +89,7 @@ let g:NERDTreeMinimalUI = 1
 let g:NERDTreeDirArrows = 1
 nnoremap <leader>n :NERDTreeFocus<CR>
 nnoremap <C-t> :NERDTreeToggle<CR>
+nnoremap <C-g> :NERDTreeFind<CR>
 " }}}
 
 " Plugin: NerdTreeGit {{{
