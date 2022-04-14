@@ -11,7 +11,7 @@ set tabstop=2
 set shiftwidth=2
 set expandtab
 set number
-set signcolumn=number
+set signcolumn=yes
 " TODO: use difference color column by filetypes
 set colorcolumn=80,100,120
 set hidden
@@ -45,6 +45,7 @@ call plug#begin()
   Plug 'mg979/vim-visual-multi', {'branch': 'master'} " multi cursors
   Plug 'preservim/nerdtree'                           " file tree
   Plug 'Xuyuanp/nerdtree-git-plugin'
+  Plug 'airblade/vim-gitgutter'                       " git gutter
 
   Plug 'prabirshrestha/vim-lsp'                       " lsp for many langs
   Plug 'prabirshrestha/asyncomplete.vim'              " autocomplete
@@ -64,6 +65,10 @@ call plug#begin()
   Plug 'lifepillar/pgsql.vim'                         " postgresql lang support
   Plug 'LnL7/vim-nix'                                 " nix lang
 call plug#end()
+" }}}
+
+" Plugin: GitGutter {{{
+let g:gitgutter_set_sign_backgrounds = 1
 " }}}
 
 let g:sql_type_default = 'pgsql'
