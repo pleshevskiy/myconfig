@@ -85,7 +85,7 @@ myKeys conf = mkKeymap conf $
 
    -- Rotate through the available layout algorithms
   , ("M-<Space>", cycleThroughLayouts ["Full", "Tall"])
-  , ("M-<Tab>", sendMessage $ JumpToLayout "Grid")
+  , ("M-<Tab>", cycleThroughLayouts ["Grid", "Tall"])
 
   --  Reset the layouts on the current workspace to default
   , ("M-S-<Space>", setLayout $ XMonad.layoutHook conf)
