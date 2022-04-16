@@ -17,7 +17,7 @@ set colorcolumn=80,100,120
 set hidden
 set nobackup
 set nowritebackup
-set updatetime=300
+set updatetime=100
 set shortmess+=c
 set nopaste
 set foldcolumn=0
@@ -68,8 +68,8 @@ call plug#end()
 " }}}
 
 " Plugin: GitGutter {{{
-let g:gitgutter_set_sign_backgrounds = 1
-let g:gitgutter_highlight_linenrs = 1
+let g:gitgutter_sign_priority = 1
+let g:gitgutter_set_sign_backgrounds = 0
 
 nnoremap <leader>ghl :GitGutterLineHighlightsToggle<CR>
 " }}}
@@ -78,10 +78,10 @@ let g:sql_type_default = 'pgsql'
 
 " Plugin: NeoFormat {{{
 let g:neoformat_try_node_exe = 1
+let g:neoformat_only_msg_on_error = 1
 aug fmt
   au!
-  au FileType javascript,javascriptreact,typescript,typescriptreact,rust,haskell
-        \ au BufWritePre <buffer> undojoin | Neoformat
+  au BufWritePre * undojoin | Neoformat
 aug END
 " }}}
 
