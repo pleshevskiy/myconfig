@@ -49,6 +49,7 @@ in
     xh              # friendly and fast tool for sending HTTP requests
     fd              # a simple, fast and user-friendly alternative to find
     bat             # a cat clone with syntax highlighting and git integration
+    pass            # cli password manager
 
     # haskell
     stylish-haskell # formatter
@@ -60,9 +61,16 @@ in
     librewolf       # a fork of firefox, focused on privacy, security and freedom
   ];
 
-  home.sessionVariables = {
-    EDITOR = "nvim";
-  };
+  home.sessionVariables = 
+    let 
+      pass_data_dir = "${config.home.sessionVariables.XDG_DATA_HOME}/pass";
+    in
+    {
+      EDITOR = "nvim";
+      # for 'pass' tool
+      PASSWORD_STORE_DIR = "${pass_data_dir}/store";
+      PASSWORD_STORE_EXTENSIONS_DIR = "${pass_data_dir}/extensions";
+    };
 
   xsession = {
     enable = true;
@@ -97,8 +105,13 @@ in
     inactiveInterval = 5;
   };
 
+  services.gpg-agent.enable = true;
+
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+
+  # used for pass
+  programs.gpg.enable = true;
 
   # enable z shell
   programs.zsh = {
